@@ -75,13 +75,15 @@
 
                 if(search!=$('#searchInput').val())
                 {
-                    offset=0;
+                    imageoffset=0;
+                    weboffset=0;
+                    videosoffset=0;
                     $('#images-results').html('');
                     search=$('#searchInput').val();
                 }
 
                 
-                searchWeb(search);
+                //searchWeb(search);
                 searchImages(search);
                 
 

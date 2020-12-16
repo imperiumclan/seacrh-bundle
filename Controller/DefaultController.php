@@ -45,7 +45,7 @@ class DefaultController extends AbstractController
                     'response' => $response,
                 ]);
         }
-
+        
         $result['next_offset'] = count($response);
 
         return new JsonResponse($result);

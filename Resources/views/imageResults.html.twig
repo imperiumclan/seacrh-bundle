@@ -1,10 +1,16 @@
-{% for item in response %}
-        <div class="col-4 col-md-2 col-lg-1">
-            {# <div>
-                
-            </div> #}
-            <a href="{{ item.media }}" target="_blank">
-             <img class="img-thumbnail" title="{{ item.title|raw }}" alt-src="{{ item.media_fullsize }}" src="{{ item.thumbnail }}" alt='Erreur !' onError="image_error(this);"/>
-            </a>
-        </div>
-{% endfor %}
+{% if response|length > 0 %}
+    {% for item in response %}
+            <div class="col-4 col-md-2 col-lg-1">
+                {# <div>
+                    
+                </div> #}
+                <a href="{{ item.media }}" target="_blank">
+                <img class="img-thumbnail" title="{{ item.title|raw }}" alt-src="{{ item.media_fullsize }}" src="{{ item.thumbnail }}" alt='Erreur !' onError="image_error(this);"/>
+                </a>
+            </div>
+    {% endfor %}
+{% else %}
+    <div class="col-12 text-center">
+        - Aucun résultats -
+    </div>
+{% endif %}
