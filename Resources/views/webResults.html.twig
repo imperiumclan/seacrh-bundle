@@ -1,0 +1,13 @@
+{% for item in response %}
+        <div class="col-12 mb-3 mt-3 border-bottom">
+            <div class="media">
+                <img width="64px" height="64px" class="mr-3" src="{{ item.favicon }}" alt="Icône"/>
+                <div class="media-body">
+                <h5><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></h5>
+                <p>{{ item.desc }}</p>
+                </div>
+            </div>
+            
+            </a>
+        </div>
+{% endfor %}

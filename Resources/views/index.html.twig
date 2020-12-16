@@ -1,0 +1,142 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1><i class="fa fa-search"></i> Welcome to Search Bundle</h1>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-4 offset-md-4">
+                <form id="searchForm" method="POST">
+                    <div class="input-group">
+                        <input id="searchInput" class="form-control" type="search" name="search" placeholder="Search..." value="{{ search|default('') }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+        <div class="results">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="web-tab" data-toggle="tab" href="#web" role="tab" aria-controls="home" aria-selected="true">Web</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="profile" aria-selected="false">Images</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="messages" aria-selected="false">Videos</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="web" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="container-fluid">
+                        <div class="row mt-3" id="web-results">
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="container-fluid">
+                        <div class="row mt-3" id="images-results">
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="videos" role="tabpanel" aria-labelledby="messages-tab">
+                    <div class="container-fluid">
+                        <div class="row mt-3" id="videos-results">
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+        var imageoffset=0;
+        var weboffset=0;
+        var videosoffset=0;
+        var search = '';
+        $('#searchForm').submit(function(e){
+
+    
+
+                if(search!=$('#searchInput').val())
+                {
+                    offset=0;
+                    $('#images-results').html('');
+                    search=$('#searchInput').val();
+                }
+
+                
+                searchWeb(search);
+                searchImages(search);
+                
+
+               
+
+                e.preventDefault();
+                
+        });
+
+        $(window).scroll(function() {
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                $('#searchForm').submit();
+            }
+        });
+
+        function searchImages(s)
+        {
+                $.ajax({    
+                    method: 'GET',
+                    url: '{{ path('ics_search_homepage') }}search/images/' + s + '/' + imageoffset
+
+                }).done(function(data){
+
+                    imageoffset = imageoffset + data.next_offset;
+
+                    $('#images-results').append(data.results);
+
+                    if(data.next_offset > 0 && $(document).height() <= $(window).height())
+                    {
+                        $('#searchForm').submit();
+                    }
+    
+                });
+        }
+
+        function searchWeb(s)
+        {
+                $.ajax({    
+                    method: 'GET',
+                    url: '{{ path('ics_search_homepage') }}search/web/' + s + '/' + weboffset
+
+                }).done(function(data){
+
+                    weboffset = weboffset + data.next_offset;
+
+                    $('#web-results').append(data.results);
+
+                    if(data.next_offset > 0 && $(document).height() <= $(window).height())
+                    {
+                        $('#searchForm').submit();
+                    }
+    
+                });
+        }
+
+</script>
+
+{% endblock %}

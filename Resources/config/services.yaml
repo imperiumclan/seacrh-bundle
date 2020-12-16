@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  ICS\SearchBundle\Controller\:
+    resource: "../../Controller"
+    tags: ['controller.service_arguments']
+  ICS\SearchBundle\Service\:
+    resource: "../../Service"
+    tags: ['controller.service_arguments']

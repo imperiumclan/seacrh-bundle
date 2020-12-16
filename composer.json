@@ -1,0 +1,31 @@
+{
+    "name": "imperiumclan/search-bundle",
+    "description": "Bundle for seacrh services.",
+    "type": "symfony-bundle",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ICS\\SearchBundle\\" : "/"
+        }
+    },
+    "require": {
+        "php": "^7.2.5",
+        "ext-json": "*",
+        "symfony/config": "^4.4|^5.0",
+        "symfony/dependency-injection": "^4.4|^5.0",
+        "symfony/event-dispatcher": "^4.4|^5.0",
+        "symfony/framework-bundle": "^4.4|^5.0",
+        "symfony/intl": "^4.4|^5.0",
+        "symfony/security-bundle": "^4.4|^5.0",
+        "symfony/string": "^5.0",
+        "symfony/translation": "^4.4|^5.0",
+        "symfony/twig-bundle": "^4.4|^5.0"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
+    }
+}
