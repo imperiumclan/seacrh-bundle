@@ -78,14 +78,16 @@
                     imageoffset=0;
                     weboffset=0;
                     videosoffset=0;
+                    $('#web-results').html('');
                     $('#images-results').html('');
+                    $('#videos-results').html('');
                     search=$('#searchInput').val();
                 }
 
                 
-                //searchWeb(search);
-                searchImages(search);
-                
+                {# searchWeb(search);
+                searchImages(search); #}
+                searchVideos(search);
 
                
 
@@ -138,6 +140,30 @@
     
                 });
         }
+
+        function searchVideos(s)
+        {
+                $.ajax({    
+                    method: 'GET',
+                    url: '{{ path('ics_search_homepage') }}search/videos/' + s + '/' + videosoffset
+
+                }).done(function(data){
+
+                    videosoffset = videosoffset + data.next_offset;
+
+                    $('#videos-results').append(data.results);
+
+                    if(data.next_offset > 0 && $(document).height() <= $(window).height())
+                    {
+                        $('#searchForm').submit();
+                    }
+    
+                });
+        }
+
+        {% if search is defined %}
+            $('#searchForm').submit();
+        {% endif %}
 
 </script>
 

@@ -15,7 +15,10 @@ class DefaultController extends AbstractController
      */
     public function index(Request $request, QwantService $searchService)
     {
+        $search = $request->get('search');
+
         return $this->render('@Search/index.html.twig', [
+            'search' => $search,
         ]);
     }
 
@@ -28,7 +31,6 @@ class DefaultController extends AbstractController
 
         if ('' != $search) {
             $res = $searchService->search($search, 30, $offset, $type);
-            dump($res);
             $response = $res->data->result->items;
         }
 
@@ -39,15 +41,24 @@ class DefaultController extends AbstractController
                 ]);
             break;
             case 'videos':
+                $result['results'] = $this->renderView('@Search/videosResults.html.twig', [
+                    'response' => $response,
+                ]);
             break;
             default:
                 $result['results'] = $this->renderView('@Search/webResults.html.twig', [
                     'response' => $response,
                 ]);
         }
-        
+
         $result['next_offset'] = count($response);
 
         return new JsonResponse($result);
+    }
+
+    public function getVideos()
+    {
+        $videoId = 'ok';
+        $url = 'https://www.youtube.com/get_video_info?video_id='.$videoId.'&el=embedded&ps=default&eurl=&gl=US&hl=en';
     }
 }
