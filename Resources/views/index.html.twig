@@ -84,16 +84,9 @@
                     search=$('#searchInput').val();
                 }
 
-<<<<<<< HEAD
 
                 searchWeb(search);
                 searchImages(search);
-=======
-                
-                {# searchWeb(search);
-                searchImages(search); #}
-                searchVideos(search);
->>>>>>> 86f12a6204730946e00cce71bc1d23b272f7cbe1
 
 
 
@@ -150,7 +143,7 @@
 
         function searchVideos(s)
         {
-                $.ajax({    
+                $.ajax({
                     method: 'GET',
                     url: '{{ path('ics_search_homepage') }}search/videos/' + s + '/' + videosoffset
 
@@ -164,7 +157,7 @@
                     {
                         $('#searchForm').submit();
                     }
-    
+
                 });
         }
 

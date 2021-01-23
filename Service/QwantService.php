@@ -13,7 +13,7 @@ class QwantService
 
     public function __construct(ContainerInterface $container)
     {
-        $store = new Store($container->getParameter('kernel.project_dir').'/var/cache/WebServices/Qwant/');
+        $store = new Store($container->getParameter('kernel.project_dir') . '/var/cache/WebServices/Qwant/');
         $this->client = new CurlHttpClient();
 
         $this->client = new CachingHttpClient($this->client, $store);
@@ -24,7 +24,7 @@ class QwantService
     {
         $requestOptions = [];
 
-        $url = 'https://api.qwant.com/egp/search/'.$type;
+        $url = 'https://api.qwant.com/egp/search/' . $type;
 
         $requestOptions['q'] = $searchValue;
         $requestOptions['offset'] = $offset;
@@ -32,23 +32,19 @@ class QwantService
 
         if ('images' == $type) {
             $options['count'] = $nbResult;
-<<<<<<< HEAD
             $requestOptions['size'] = 'large';
-=======
-            $options['size'] = 'large';
->>>>>>> 86f12a6204730946e00cce71bc1d23b272f7cbe1
         }
 
         $options = '';
         if (count($requestOptions) > 0) {
             $options = '?';
             foreach ($requestOptions as $key => $opt) {
-                $options .= $key.'='.$opt.'&';
+                $options .= $key . '=' . $opt . '&';
             }
             $options = substr($options, 0, strlen($options) - 1);
         }
-        dump($url.$options);
-        $response = $this->client->request('GET', $url.$options, [
+
+        $response = $this->client->request('GET', $url . $options, [
             'max_redirects' => 5,
         ]);
 
