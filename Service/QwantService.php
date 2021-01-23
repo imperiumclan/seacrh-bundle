@@ -32,7 +32,11 @@ class QwantService
 
         if ('images' == $type) {
             $options['count'] = $nbResult;
+<<<<<<< HEAD
             $requestOptions['size'] = 'large';
+=======
+            $options['size'] = 'large';
+>>>>>>> 86f12a6204730946e00cce71bc1d23b272f7cbe1
         }
 
         $options = '';
