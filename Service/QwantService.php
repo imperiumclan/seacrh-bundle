@@ -29,8 +29,10 @@ class QwantService
         $requestOptions['q'] = $searchValue;
         $requestOptions['offset'] = $offset;
 
+
         if ('images' == $type) {
             $options['count'] = $nbResult;
+            $requestOptions['size'] = 'large';
         }
 
         $options = '';

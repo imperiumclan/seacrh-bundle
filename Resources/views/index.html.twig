@@ -37,27 +37,27 @@
                 <div class="tab-pane active" id="web" role="tabpanel" aria-labelledby="home-tab">
                     <div class="container-fluid">
                         <div class="row mt-3" id="web-results">
-        
+
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane" id="images" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="container-fluid">
                         <div class="row mt-3" id="images-results">
-        
+
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane" id="videos" role="tabpanel" aria-labelledby="messages-tab">
                     <div class="container-fluid">
                         <div class="row mt-3" id="videos-results">
-        
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 {% endblock %}
 
@@ -71,7 +71,7 @@
         var search = '';
         $('#searchForm').submit(function(e){
 
-    
+
 
                 if(search!=$('#searchInput').val())
                 {
@@ -82,26 +82,26 @@
                     search=$('#searchInput').val();
                 }
 
-                
-                //searchWeb(search);
-                searchImages(search);
-                
 
-               
+                searchWeb(search);
+                searchImages(search);
+
+
+
 
                 e.preventDefault();
-                
+
         });
 
         $(window).scroll(function() {
-            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+            if($(window).scrollTop() >= $(document).height() - $(window).height()) {
                 $('#searchForm').submit();
             }
         });
 
         function searchImages(s)
         {
-                $.ajax({    
+                $.ajax({
                     method: 'GET',
                     url: '{{ path('ics_search_homepage') }}search/images/' + s + '/' + imageoffset
 
@@ -115,13 +115,13 @@
                     {
                         $('#searchForm').submit();
                     }
-    
+
                 });
         }
 
         function searchWeb(s)
         {
-                $.ajax({    
+                $.ajax({
                     method: 'GET',
                     url: '{{ path('ics_search_homepage') }}search/web/' + s + '/' + weboffset
 
@@ -135,7 +135,7 @@
                     {
                         $('#searchForm').submit();
                     }
-    
+
                 });
         }
 
