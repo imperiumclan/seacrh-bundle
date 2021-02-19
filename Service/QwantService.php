@@ -3,20 +3,15 @@
 namespace ICS\SearchBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpClient\CachingHttpClient;
-use Symfony\Component\HttpClient\CurlHttpClient;
-use Symfony\Component\HttpKernel\HttpCache\Store;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class QwantService
 {
     private $client;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, HttpClientInterface $httpclient)
     {
-        $store = new Store($container->getParameter('kernel.project_dir') . '/var/cache/WebServices/Qwant/');
-        $this->client = new CurlHttpClient();
-
-        $this->client = new CachingHttpClient($this->client, $store);
+        $this->client = $httpclient;
         $this->container = $container;
     }
 
@@ -24,14 +19,15 @@ class QwantService
     {
         $requestOptions = [];
 
-        $url = 'https://api.qwant.com/egp/search/' . $type;
+        $url = 'https://api.qwant.com/egp/search/' . $type . '/';
 
-        $requestOptions['q'] = $searchValue;
-        $requestOptions['offset'] = $offset;
-
+        $requestOptions['q'] = trim($searchValue);
+        if ($offset > 0) {
+            $requestOptions['offset'] = $offset;
+        }
 
         if ('images' == $type) {
-            $options['count'] = $nbResult;
+            $requestOptions['count'] = $nbResult;
             $requestOptions['size'] = 'large';
         }
 
@@ -43,9 +39,12 @@ class QwantService
             }
             $options = substr($options, 0, strlen($options) - 1);
         }
-
+        // dump($url . $options);
         $response = $this->client->request('GET', $url . $options, [
             'max_redirects' => 5,
+            'headers' => [
+                'User-Agent' => 'PostmanRuntime/7.26.10'
+            ]
         ]);
 
         return json_decode($response->getContent());
