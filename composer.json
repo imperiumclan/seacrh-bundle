@@ -2,7 +2,7 @@
     "name": "imperiumclan/search-bundle",
     "description": "Bundle for seacrh services.",
     "type": "symfony-bundle",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "license": "MIT",
     "autoload": {
         "psr-4": {
